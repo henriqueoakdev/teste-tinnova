@@ -30,6 +30,11 @@ public class VeiculoService {
 		return v.insert(obj);
 	}
 	
+	public void delete(String id) {
+		findById(id);
+		v.deleteById(id);
+	}
+	
 	public Veiculo fromDTO(VeiculoDTO objDto) {
 		return new Veiculo(objDto.getId(), objDto.getVeiculo(), objDto.getMarca(), objDto.getAno(), objDto.getDescricao(), objDto.isVendido());
 	}
