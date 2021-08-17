@@ -1,8 +1,7 @@
 package com.henriqueoak.testetinnova.resources;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.henriqueoak.testetinnova.domain.Veiculo;
+import com.henriqueoak.testetinnova.dto.VeiculoDTO;
 import com.henriqueoak.testetinnova.services.VeiculoService;
 
 @RestController
@@ -21,8 +21,9 @@ public class VeiculoResource {
 	private VeiculoService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Veiculo>> findAll(){
+	public ResponseEntity<List<VeiculoDTO>> findAll(){
 		List<Veiculo> list = service.findAll();
-		return ResponseEntity.ok().body(list);
+		List<VeiculoDTO> listDto = list.stream().map(x -> new VeiculoDTO(x)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 	}
 }
