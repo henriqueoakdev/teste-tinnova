@@ -4,9 +4,15 @@ import java.io.Serializable;
 import java.sql.Date;
 import java.util.Objects;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection="veiculos")
 public class Veiculo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	private String id;
 	private String veiculo;
 	private String marca;
 	private int ano;
@@ -19,13 +25,22 @@ public class Veiculo implements Serializable{
 		
 	}
 
-	public Veiculo(String veiculo, String marca, int ano, String descricao, boolean vendido) {
+	public Veiculo(String id, String veiculo, String marca, int ano, String descricao, boolean vendido) {
 		super();
+		this.id = id;
 		this.veiculo = veiculo;
 		this.marca = marca;
 		this.ano = ano;
 		this.descricao = descricao;
 		this.vendido = vendido;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	public String getVeiculo() {
@@ -86,7 +101,7 @@ public class Veiculo implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(ano, created, descricao, marca, updated, veiculo, vendido);
+		return Objects.hash(ano, created, descricao, id, marca, updated, veiculo, vendido);
 	}
 
 	@Override
@@ -99,7 +114,8 @@ public class Veiculo implements Serializable{
 			return false;
 		Veiculo other = (Veiculo) obj;
 		return ano == other.ano && Objects.equals(created, other.created) && Objects.equals(descricao, other.descricao)
-				&& Objects.equals(marca, other.marca) && Objects.equals(updated, other.updated)
-				&& Objects.equals(veiculo, other.veiculo) && vendido == other.vendido;
+				&& Objects.equals(id, other.id) && Objects.equals(marca, other.marca)
+				&& Objects.equals(updated, other.updated) && Objects.equals(veiculo, other.veiculo)
+				&& vendido == other.vendido;
 	}
 }
